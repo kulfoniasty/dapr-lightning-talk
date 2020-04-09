@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  labels:
+    app: echo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "echo"
+        dapr.io/port: "9080"
+    spec:
+      containers:
+        - name: echo-server
+          image: echo:v3
+          ports:
+            - containerPort: 9080
+          imagePullPolicy: Never
