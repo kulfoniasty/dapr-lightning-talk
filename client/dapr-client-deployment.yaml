@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo-client
+  labels:
+    app: echo-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo-client
+  template:
+    metadata:
+      labels:
+        app: echo-client
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/id: "echo-client"
+        dapr.io/port: "9080"
+    spec:
+      containers:
+        - name: echo-client-server
+          image: echo-client:v4
+          ports:
+            - containerPort: 9080
+          imagePullPolicy: Never
